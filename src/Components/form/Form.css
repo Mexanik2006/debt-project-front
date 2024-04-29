@@ -1,0 +1,64 @@
+.form {
+    height: 10%;
+    /* border: 1px solid red; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.inputs {
+    display: grid;
+}
+
+.inputs input {
+    padding: 5px;
+    margin: 0 8px;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    margin-top: 3px;
+}
+
+.btn button {
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    background-color: green;
+    font-family: "Tilt Prism", cursive;
+    font-weight: 700;
+    color: white;
+    border-radius: 25% 0 25% 0;
+    transition: 1s;
+    font-size: 20px;
+}
+
+.btn button:hover {
+    border-radius: 0% 25% 0% 25%;
+}
+
+@media screen and (max-width:500px) {
+    .form {
+        height: auto;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .input {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 90%;
+    }
+
+    .input input {
+        width: 90%;
+        margin-top: 10px;
+        height: 40px;
+    }
+
+    .btn {
+        margin-top: 10px;
+    }
+}
