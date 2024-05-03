@@ -1,7 +1,14 @@
 .userlist {
     /* border: 2px solid pink; */
 }
-
+.loaderRotatingLines {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 50px;
+}
 .userlist li {
     display: flex;
     justify-content: space-between;
@@ -53,13 +60,29 @@
 .list_left {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 90%;
+        /* border: 1px solid red; */
+    }
+    
+    .list_left span:nth-child(1) {
+        /* border: 1px solid red; */
+        width: 400px;
+    }
+    
+    .list_left span:nth-child(2) {
+        /* border: 1px solid red; */
+        width: 300px;
+    }
+    
+    .list_left span:nth-child(3) {
+        /* border: 1px solid red; */
+        width: 400px;
 }
 
 .list_right {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 5%;
     padding-left: 20px;
 }
 

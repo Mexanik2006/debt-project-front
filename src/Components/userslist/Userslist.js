@@ -4,11 +4,13 @@ import Axios from '../../api/api';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { RotatingLines } from 'react-loader-spinner';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 function Userslist() {
     const [data, setData] = useState([]);
-    const [isLoading] = useState(false);
-    const { setIsLoading, setContextIsLoading, sensor, setSensor } = useContext(AuthContext);
+    const [isLoading, setIsLoading] = useState(true);
+    const { sensor, setSensor } = useContext(AuthContext);
     const { user } = useAuthContext();
 
 
@@ -58,12 +60,23 @@ function Userslist() {
         <ul className='userlist'>
             <h1>User lists</h1>
             {isLoading ? (
-                <h1>Loading...</h1>
+                <div className="loaderRotatingLines">
+                    <RotatingLines
+                        visible={true}
+                        height="50"
+                        width="50"
+                        color="#008000"
+                        strokeWidth="5"
+                        animationDuration="3000"
+                        ariaLabel="rotating-lines-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                    /></div>
             ) : (
                 data.map((user) => (
                     <li key={user._id}>
                         <div className='list_left'>
-                            <span>
+                            <span className='listlar'>
                                 Ismi: <b>{user.debtorname}</b>
                             </span>
                             <span>
@@ -75,11 +88,11 @@ function Userslist() {
                         </div>
 
                         <div className='list_right'>
-                            <a href={`tel:${user.number}`}>Telefon raqami: +{user.phonenumber}</a>
-                            <Link className='link' to={`/debt/${user._id}`}>
-                                Taxrirlash
+                            {/* <a href={`tel:${user.number}`}>Telefon raqami: +{user.phonenumber}</a> */}
+                            <Link className='link' to={`/debt/${user._id}`} >
+                                <EditOutlined />
                             </Link>
-                            <button onClick={() => deleteUser(user._id)}>delete</button> {/* Fixing this line */}
+                            <button onClick={() => deleteUser(user._id)} style={{ marginLeft: "10px" }}><DeleteOutlined /></button> {/* Fixing this line */}
                         </div>
                     </li>
                 ))
