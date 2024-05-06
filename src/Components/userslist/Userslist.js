@@ -6,6 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { RotatingLines } from 'react-loader-spinner';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { Table } from 'antd';
 
 function Userslist() {
     const [data, setData] = useState([]);
@@ -73,30 +74,66 @@ function Userslist() {
                         wrapperClass=""
                     /></div>
             ) : (
-                data.map((user) => (
-                    <li key={user._id}>
-                        <div className='list_left'>
-                            <span className='listlar'>
-                                Ismi: <b>{user.debtorname}</b>
-                            </span>
-                            <span>
-                                Qancha qarzi bor: <b style={{ color: 'red' }}>{user.howmuchdebt}</b>
-                            </span>
-                            <span>
-                                Nima olgan: <b>{user.whatcameout}</b>
-                            </span>
-                        </div>
+                    // data.map((user) => (
+                    //     <li key={user._id}>
+                    //         <div className='list_left'>
+                    //             <span className='listlar'>
+                    //                 Ismi: <b>{user.debtorname}</b>
+                    //             </span>
+                    //             <span>
+                    //                 Qancha qarzi bor: <b style={{ color: 'red' }}>{user.howmuchdebt}</b>
+                    //             </span>
+                    //             <span>
+                    //                 Nima olgan: <b>{user.whatcameout}</b>
+                    //             </span>
+                    //         </div>
 
-                        <div className='list_right'>
-                            {/* <a href={`tel:${user.number}`}>Telefon raqami: +{user.phonenumber}</a> */}
-                            <Link className='link' to={`/debt/${user._id}`} >
-                                <EditOutlined />
+                    //         <div className='list_right'>
+                    //             {/* <a href={`tel:${user.number}`}>Telefon raqami: +{user.phonenumber}</a> */}
+                    //             <Link className='link' to={`/debt/${user._id}`} >
+                    //                 <EditOutlined />
+                    //             </Link>
+                    //             <button onClick={() => deleteUser(user._id)} style={{ marginLeft: "10px" }}><DeleteOutlined /></button> {/* Fixing this line */}
+                    //         </div>
+                    //     </li>
+                    // ))
+
+                    <Table dataSource={data} className='tablesinlleuser'
+                    // pagination={{
+                    //     position: [],
+                    // }}
+                    >
+                        <Table.Column title="Ismi" dataIndex="amount" key="amount" render={(text, record) => (
+                            <span>{record.debtorname}</span>
+                        )} />
+
+                        <Table.Column title="Qancha qarzi bor" dataIndex="amount" key="amount" render={(text, record) => (
+                            <span>{record.howmuchdebt}</span>
+                        )} />
+
+                        <Table.Column title="Nima olgan" dataIndex="amount" key="amount" render={(text, record) => (
+                            <span>{record.whatcameout}</span>
+                        )} />
+
+                        <Table.Column title="Telefon raqami" dataIndex="amount" key="amount" render={(text, record) => (
+                            <span>+{record.phonenumber}</span>
+                        )} />
+
+                        <Table.Column title="Taxrirlash" dataIndex="amount" key="amount" render={(text, record) => (
+                            <Link className='link' to={`/debt/${record._id}`} >
+                                Edit
                             </Link>
-                            <button onClick={() => deleteUser(user._id)} style={{ marginLeft: "10px" }}><DeleteOutlined /></button> {/* Fixing this line */}
-                        </div>
-                    </li>
-                ))
+                    )} />
+
+                    <Table.Column title="O'chirish" dataIndex="amount" key="amount" render={(text, record) => (
+                        <button onClick={() => deleteUser(record._id)} style={{ marginLeft: "10px" }}>Delete</button>
+
+                    )} />
+                </Table>
             )}
+
+            <div className="footer">Created by acer
+            </div>
         </ul>
     );
 }
