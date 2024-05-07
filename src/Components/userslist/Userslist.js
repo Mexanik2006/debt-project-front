@@ -74,30 +74,6 @@ function Userslist() {
                         wrapperClass=""
                     /></div>
             ) : (
-                    // data.map((user) => (
-                    //     <li key={user._id}>
-                    //         <div className='list_left'>
-                    //             <span className='listlar'>
-                    //                 Ismi: <b>{user.debtorname}</b>
-                    //             </span>
-                    //             <span>
-                    //                 Qancha qarzi bor: <b style={{ color: 'red' }}>{user.howmuchdebt}</b>
-                    //             </span>
-                    //             <span>
-                    //                 Nima olgan: <b>{user.whatcameout}</b>
-                    //             </span>
-                    //         </div>
-
-                    //         <div className='list_right'>
-                    //             {/* <a href={`tel:${user.number}`}>Telefon raqami: +{user.phonenumber}</a> */}
-                    //             <Link className='link' to={`/debt/${user._id}`} >
-                    //                 <EditOutlined />
-                    //             </Link>
-                    //             <button onClick={() => deleteUser(user._id)} style={{ marginLeft: "10px" }}><DeleteOutlined /></button> {/* Fixing this line */}
-                    //         </div>
-                    //     </li>
-                    // ))
-
                     <Table dataSource={data} className='tablesinlleuser'
                     // pagination={{
                     //     position: [],
