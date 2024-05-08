@@ -1,6 +1,5 @@
-.admin_link {
-    margin-right: 10px;
-}
 .container {
-    width: 100%;
+        max-width: 100%;
+            padding: 20px;
+            background: white;
 }

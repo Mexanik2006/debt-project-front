@@ -14,6 +14,7 @@ import { AuthContext } from './context/AuthContext'
 import Admin from './pages/admin/Admin'
 import Singleuser from './pages/singleuser/Singleuser'
 import Archives from './pages/archives/Archives'
+import Footer from './Components/footer/Footer'
 
 function App() {
   const { user } = useAuthContext()
@@ -35,28 +36,39 @@ function App() {
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
+
+
             <Route
               path="/admin"
               element={user ? <Admin /> : <Navigate to="/login" />}
             />
+
+
             <Route
               path="/archives"
               element={user ? <Archives /> : <Navigate to="/login" />}
             />
+
+
             <Route
               path="/signup"
               element={user ? <Signup /> : <Navigate to="/login" />}
             />
+
+
             <Route
               path="/debt/:id"
               element={user ? <Singlepage /> : <Navigate to="/login" />}
             />
+
+
             <Route
               path="/singleuser/:id"
               element={user ? <Singleuser /> : <Navigate to="/login" />}
             />
           </Routes>
         </div>
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );

@@ -1,6 +1,6 @@
-
+/* 
 .loaderRotatingLines {
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,9 +10,9 @@
 .userlist li {
     display: flex;
     justify-content: space-between;
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
     border-radius: 4px;
-    /* width: 90%; */
+    width: 90%;
     margin: auto;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -62,21 +62,21 @@
     display: flex;
     justify-content: space-between;
     width: 90%;
-        /* border: 1px solid red; */
+        border: 1px solid red;
     }
     
     .list_left span:nth-child(1) {
-        /* border: 1px solid red; */
+        border: 1px solid red;
         width: 400px;
     }
     
     .list_left span:nth-child(2) {
-        /* border: 1px solid red; */
+        border: 1px solid red;
         width: 300px;
     }
     
     .list_left span:nth-child(3) {
-        /* border: 1px solid red; */
+        border: 1px solid red;
         width: 400px;
 }
 
@@ -107,7 +107,7 @@
         margin-bottom: 10px;
         display: flex;
         flex-direction: column;
-        /* padding: 0 10px; */
+        padding: 0 10px;
     }
 
     .list_right {
@@ -123,3 +123,108 @@
     text-align: center;
     padding: 10px 0;
 }
+*/ .userlistt {
+    max-width: 1480px;
+    margin: 50px auto;
+    margin-bottom: 200px;
+}
+
+.userlist_title {
+    font-size: 25px;
+    font-weight: 900;
+    text-align: start;
+    margin-bottom: 30px;
+    margin-left: 50px;
+}
+
+.tablesinlleuser {
+    margin-left: -40px;
+    max-width: 1480px;
+    margin-bottom: 200px;
+}
+
+.tablesinlleuser {
+    display: block;
+}
+
+.tablesinlleuser_media {
+    display: none;
+}
+
+.tablesinlleuser_media_600px {
+    display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .userlistt {
+        max-width: 760px;
+        margin: 50px auto;
+    }
+
+    .userlist_title {
+        font-size: 20px;
+        font-weight: 900;
+        text-align: start;
+        margin-bottom: 30px;
+        margin-left: 50px;
+    }
+
+    .tablesinlleuser {
+        margin-left: -40px;
+        max-width: 760px;
+        padding: 0 20px;
+    }
+
+    .tablesinlleuser {
+        display: none;
+    }
+
+    .tablesinlleuser_media {
+        display: block;
+        margin-left: -20px;
+    }
+
+    .tablesinlleuser_media_600px {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .userlistt {
+        max-width: 760px;
+        margin: 50px auto;
+    }
+
+    .userlist_title {
+        font-size: 20px;
+        font-weight: 900;
+        text-align: start;
+        margin-bottom: 30px;
+        /* margin-left: 20px; */
+    }
+
+    .tablesinlleuser {
+        margin-left: -40px;
+        max-width: 760px;
+        padding: 0 20px;
+    }
+
+    .tablesinlleuser {
+        display: none;
+    }
+
+    .tablesinlleuser_media {
+        display: block;
+    }
+
+    .tablesinlleuser_media_600px {
+        display: none;
+    }
+
+    .tablesinlleuser_media {
+        margin-left: -30px;
+        max-width: 400px;
+    }
+}
+
+/*  */

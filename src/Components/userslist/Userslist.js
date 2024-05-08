@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { RotatingLines } from 'react-loader-spinner';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Table } from 'antd';
+import { Button, Popconfirm, Table, message } from 'antd';
 
 function Userslist() {
     const [data, setData] = useState([]);
@@ -57,9 +56,20 @@ function Userslist() {
         }
     };
 
+    //
+
+
+    const confirm = () =>
+        new Promise((resolve) => {
+            setTimeout(() => {
+                // Buyruqning to'g'ri bajarilganini anglatamiz
+                resolve();
+            }, 3000); // 3 sekund kutamiz
+        });
+
     return (
-        <ul className='userlist'>
-            <h1>User lists</h1>
+        <ul className='userlistt'>
+            <h1 className='userlist_title'>Qarzdorlar ro'yhati</h1>
             {isLoading ? (
                 <div className="loaderRotatingLines">
                     <RotatingLines
@@ -74,6 +84,7 @@ function Userslist() {
                         wrapperClass=""
                     /></div>
             ) : (
+                    <div className="">
                     <Table dataSource={data} className='tablesinlleuser'
                     // pagination={{
                     //     position: [],
@@ -102,14 +113,110 @@ function Userslist() {
                     )} />
 
                     <Table.Column title="O'chirish" dataIndex="amount" key="amount" render={(text, record) => (
-                        <button onClick={() => deleteUser(record._id)} style={{ marginLeft: "10px" }}>Delete</button>
+                                // <button onClick={() => deleteUser(record._id)} style={{ marginLeft: "10px" }}>Delete</button>
+
+
+                                // Keyingi qatorda Popconfirm komponentini ishlatamiz
+                                <Popconfirm
+                                    title="Qarzdorni o'chirmoqchimisiz?"
+                                    description={`Siz ${record.debtorname} ni o'chirmoqdasiz...`}
+                                    onConfirm={() => {
+                                        confirm().then(() => deleteUser(record._id));
+                                    }}
+                                    onCancel={() => console.log('Bekor qilindi')}
+                                    onOpenChange={() => console.log('open change')}
+                                    okText="Ha"
+                                    cancelText="Yoq"
+                                >
+                                    <Button danger>Delete</Button>
+                                </Popconfirm>
+
+
 
                     )} />
-                </Table>
-            )}
+                        </Table>
 
-            <div className="footer">Created by acer
-            </div>
+                        <Table dataSource={data} className='tablesinlleuser_media'
+                        >
+                            <Table.Column title="Ismi" dataIndex="amount" key="amount" render={(text, record) => (
+                                <span>{record.debtorname}</span>
+                            )} />
+
+                            <Table.Column title="Qancha qarzi bor" dataIndex="amount" key="amount" render={(text, record) => (
+                                <span>{record.howmuchdebt}</span>
+                            )} />
+
+                            <Table.Column title="Taxrirlash" dataIndex="amount" key="amount" render={(text, record) => (
+                                <Link className='link' to={`/debt/${record._id}`} >
+                                    Edit
+                                </Link>
+                            )} />
+
+                            {/* <Table.Column title="O'chirish" dataIndex="amount" key="amount" render={(text, record) => (
+                                // <button onClick={() => deleteUser(record._id)} style={{ marginLeft: "10px" }}>Delete</button>
+
+
+                                // Keyingi qatorda Popconfirm komponentini ishlatamiz
+                                <Popconfirm
+                                    title="Qarzdorni o'chirmoqchimisiz?"
+                                    description={`Siz ${record.debtorname} ni o'chirmoqdasiz...`}
+                                    onConfirm={() => {
+                                        confirm().then(() => deleteUser(record._id));
+                                    }}
+                                    onCancel={() => console.log('Bekor qilindi')}
+                                    onOpenChange={() => console.log('open change')}
+                                    okText="Ha"
+                                    cancelText="Yoq"
+                                >
+                                    <Button danger>Delete</Button>
+                                </Popconfirm>
+
+
+
+                            )} /> */}
+                        </Table>
+
+                        {/* <Table dataSource={data} className='tablesinlleuser_media_600px'
+                        >
+                            <Table.Column title="Ismi" dataIndex="amount" key="amount" render={(text, record) => (
+                                <span>{record.debtorname}</span>
+                            )} />
+
+                            <Table.Column title="Qancha qarzi bor" dataIndex="amount" key="amount" render={(text, record) => (
+                                <span>{record.howmuchdebt}</span>
+                            )} />
+
+                            <Table.Column title="Taxrirlash" dataIndex="amount" key="amount" render={(text, record) => (
+                                <Link className='link' to={`/debt/${record._id}`} >
+                                    Edit
+                                </Link>
+                            )} />
+
+                            <Table.Column title="O'chirish" dataIndex="amount" key="amount" render={(text, record) => (
+                                // <button onClick={() => deleteUser(record._id)} style={{ marginLeft: "10px" }}>Delete</button>
+
+
+                                // Keyingi qatorda Popconfirm komponentini ishlatamiz
+                                <Popconfirm
+                                    title="Qarzdorni o'chirmoqchimisiz?"
+                                    description={`Siz ${record.debtorname} ni o'chirmoqdasiz...`}
+                                    onConfirm={() => {
+                                        confirm().then(() => deleteUser(record._id));
+                                    }}
+                                    onCancel={() => console.log('Bekor qilindi')}
+                                    onOpenChange={() => console.log('open change')}
+                                    okText="Ha"
+                                    cancelText="Yoq"
+                                >
+                                    <Button danger>Delete</Button>
+                                </Popconfirm>
+
+
+
+                            )} />
+                        </Table> */}
+                    </div>
+            )}
         </ul>
     );
 }

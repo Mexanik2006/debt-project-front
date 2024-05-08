@@ -1,0 +1,19 @@
+.Footer {
+    /* border: 1px solid red; */
+    width: 100%;
+    /* position: fixed; */
+    bottom: 0;
+    z-index: -1;
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    display: block;
+    margin-top: 600px;
+}
+
+@media screen and (max-width: 767px) {
+    .Footer {
+        max-width: 767px;
+        margin-top: 650px;
+    }
+}
