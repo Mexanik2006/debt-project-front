@@ -4,7 +4,8 @@ import Axios from '../../api/api';
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import { Table } from 'antd';
+import { Button, Form, Input, Table } from 'antd';
+import { Typography } from 'antd';
 
 function Singlepage() {
     const { id } = useParams();
@@ -99,26 +100,88 @@ function Singlepage() {
         setSensor(true);
         navigate("/");
     };
+    const { Title } = Typography;
 
     return (
         <div>
-            <div className="singlepage_top">
-                <div className="singlepage_topCover">
-                    <input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={ayiruvQiymat.howmuchdebt < 1 ? "" : ayiruvQiymat.howmuchdebt} placeholder='qarzdan yechish' />
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} value={ayiruvQiymat.info.length < 1 ? "" : ayiruvQiymat.info} />
-                    <button onClick={ayirish}>Qarzni yechish</button>
-                </div>
-                <div className="singlepage_topCover">
-                    <input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={qoshuvQiymat.howmuchdebt < 1 ? "" : qoshuvQiymat.howmuchdebt} placeholder='qarzga qo`shish' />
-                    <input type="text" placeholder='nima oldi?' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
-                    <button onClick={qoshish}>Qarz qo`shish</button>
-                </div>
-            </div>
+            <div className="singleForm">
+                <Form initialValues={{
+                    remember: true,
+                }}
+                    autoComplete="off">
+
+
+                    <Form.Item
+                        name="plus"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Qancha qarz ayrishingizni kiriting...',
+                            },
+                        ]}
+
+                    >
+                        <Input onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={ayiruvQiymat.howmuchdebt < 1 ? "" : ayiruvQiymat.howmuchdebt} placeholder='Qarzdan yechish' />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="info"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Nima sababdan qarzdan ayrimoqdasiz...?',
+                            },
+                        ]}
+
+                    >
+                        <Input required={true} type="text" onChange={(e) => setAyiruvQiymat({ ...ayiruvQiymat, info: e.target.value })} value={ayiruvQiymat.info.length < 1 ? "" : ayiruvQiymat.info} placeholder='Qarzdan yechish sabasi...' />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button onClick={ayirish} type='primary' htmlType="submit">Qarzdan yechish</Button>
+                    </Form.Item>
+                </Form>
+
+                <Form initialValues={{
+                    remember: true,
+                }}
+                    autoComplete="off">
+
+                    <Form.Item
+                        name="plus"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Qancha qarz qo`shishingizni kiriting...',
+                            },
+                        ]}
+
+                    >
+                        <Input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={qoshuvQiymat.howmuchdebt < 1 ? "" : qoshuvQiymat.howmuchdebt} placeholder='Qarz qo`shish' />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="info"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Nima sababdan qarzdan qoshmoqdasiz...?',
+                            },
+                        ]}
+
+                    >
+                        <Input type="text" placeholder='Nimaga qarz qo`shmoqchisiz..' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button onClick={qoshish} type='primary' htmlType="submit">Qarzga qo'shish</Button>
+                    </Form.Item>
+                </Form></div>
+
+
             <div className="singlepage_main">
                 <div className="singlepage_title">
-                    <h1>Ismi: <span> {userData.debtorname}</span></h1>
-                    <h1>Umumiy qarzdorlik: <span>{userData.howmuchdebt}</span>  so`m</h1>
-                    <button onClick={deleteUser}>delete</button>
+                    <h3>Qarzdorning ismi: <span style={{ color: "#1677FF" }}> {userData.debtorname}</span></h3>
+                    <h3>Jami qarzi: <span style={{ color: "red" }}>{userData.howmuchdebt}</span>  so`m</h3>
+                    <Button onClick={deleteUser} danger>Qarzdorni o'chirish</Button>
                 </div>
                 <div className="single_container">
                     <Table dataSource={userData.info} className='tablesinlle'>

@@ -1,7 +1,7 @@
-.singlepage_top {
+/* .singlepage_top {
     display: flex;
     flex-direction: column;
-    /* border: 2px solid red; */
+    border: 2px solid red;
     justify-content: space-around;
     margin-top: 20px;
 }
@@ -43,13 +43,13 @@
 }
 
 .singlepage_main {
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
     padding: 50px 100px;
 }
 
 .singlepage_title {
     display: flex;
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
     justify-content: space-evenly;
 }
 
@@ -66,8 +66,8 @@
 .single_container {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    /* border: 2px solid blue; */
+    align-items: center;
+        border: 2px solid blue;
 }
 
 .singlepage_plus {
@@ -75,7 +75,7 @@
     margin-top: 20px;
     width: 80%;
     border-radius: 4px;
-    /* padding: 10px; */
+    padding: 10px;
     margin: auto;
 }
 
@@ -130,5 +130,104 @@
     .singlepage_plus,
     .singlepage_minus {
         width: 90%;
+    }
+}
+*/ .singleForm {
+    /* border: 1px solid red; */
+    max-width: 1480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.singleForm form {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 65%;
+    margin: auto;
+}
+
+.singleForm .ant_title {
+    margin-top: px;
+}
+
+.singleForm input {
+    max-width: 400px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.singleForm button {
+    max-width: 400px;
+    padding: 22px 27px;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.singlepage_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px auto;
+    width: 70%;
+}
+
+.singlepage_title h3 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.singlepage_title button {
+    max-width: 400px;
+    padding: 22px 27px;
+    font-size: 16px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 767px) {
+    .singleForm {
+        /* border: 1px solid red; */
+        max-width: 1480px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .singleForm form {
+        display: flex;
+        flex-direction: column;
+        margin: 50px auto;
+    }
+
+    .singlepage_title {
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .single_container {
+        max-width: 700px;
+        overflow: hidden;
+    }
+
+    .singlepage_title button {
+        max-width: 100%;
+        padding: 22px 27px;
+        font-size: 16px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
