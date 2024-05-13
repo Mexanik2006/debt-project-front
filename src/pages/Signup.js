@@ -1,30 +1,35 @@
-import { useContext, useState } from "react"
-import { useSignup } from "../hooks/useSignup"
-import { AuthContext } from "../context/AuthContext"
-import { useAuthContext } from "../hooks/useAuthContext"
-import { useNavigate } from "react-router-dom"
+import React, { useState } from 'react';
+import axios from '../api/api';
+import Cookies from 'js-cookie';
 
 const Signup = () => {
-  const navigate = useNavigate()
-  const { isLoading, setIsLoading, sensor, setSensor } = useContext(AuthContext)
-
-  const { user } = useAuthContext()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const { signup, error } = useSignup()
-
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    await signup(email, password)
-    navigate("/login")
-  }
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/signup', { userName, email, password });
+      console.log('Foydalanuvchi muvaffaqiyatli yaratildi:', response.data);
+      // Save the token to a cookie
+      Cookies.set('token', response.data.token, { expires: 7 }); // Expires in 7 days
+      // Boshqa muvaffaqiyatli foydalanuvchi yaratish qo'shing
+    } catch (error) {
+      console.error('Foydalanuvchi yaratishda xatolik:', error);
+    }
+  };
 
   return (
     <form className="signup" onSubmit={handleSubmit}>
       <h3>Sign Up</h3>
 
+      <label>Name:</label>
+      <input
+        type="text"
+        onChange={(e) => setUserName(e.target.value)}
+        value={userName}
+      />
       <label>Email address:</label>
       <input
         type="email"
@@ -38,10 +43,9 @@ const Signup = () => {
         value={password}
       />
 
-      <button disabled={isLoading}>Sign up</button>
-      {error && <div className="error">{error}</div>}
+      <button type="submit">Sign up</button>
     </form>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
