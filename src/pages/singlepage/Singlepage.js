@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "./Singlepage.css";
 import Axios from '../../api/api';
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { Button, Form, Input, Table } from 'antd';
 import { Typography } from 'antd';
+import { FaAngleDoubleLeft } from "react-icons/fa";
 
 function Singlepage() {
     const { id } = useParams();
@@ -104,7 +105,14 @@ function Singlepage() {
 
     return (
         <div>
+            <div className="home_link">
+                <Link to={'/'}>
+                    <FaAngleDoubleLeft />
+                </Link>
+            </div>
+
             <div className="singleForm">
+
                 <Form initialValues={{
                     remember: true,
                 }}
@@ -156,7 +164,7 @@ function Singlepage() {
                         ]}
 
                     >
-                        <Input onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={qoshuvQiymat.howmuchdebt < 1 ? "" : qoshuvQiymat.howmuchdebt} placeholder='Qarz qo`shish' />
+                        <Input className='inputdander' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, howmuchdebt: Number(e.target.value) })} type="number" value={qoshuvQiymat.howmuchdebt < 1 ? "" : qoshuvQiymat.howmuchdebt} placeholder='Qarz qo`shish' />
                     </Form.Item>
 
                     <Form.Item
@@ -169,10 +177,10 @@ function Singlepage() {
                         ]}
 
                     >
-                        <Input type="text" placeholder='Nimaga qarz qo`shmoqchisiz..' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
+                        <Input type="text" className='inputdander' placeholder='Nimaga qarz qo`shmoqchisiz..' onChange={(e) => setQoshuvQiymat({ ...qoshuvQiymat, info: e.target.value })} value={qoshuvQiymat.info.length < 1 ? "" : qoshuvQiymat.info} />
                     </Form.Item>
                     <Form.Item>
-                        <Button onClick={qoshish} type='primary' htmlType="submit">Qarzga qo'shish</Button>
+                        <Button onClick={qoshish} type='primary' htmlType="submit" danger>Qarzga qo'shish</Button>
                     </Form.Item>
                 </Form></div>
 

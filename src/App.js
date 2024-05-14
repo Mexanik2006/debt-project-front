@@ -3,7 +3,7 @@ import { useAuthContext } from './hooks/useAuthContext'
 
 // pages & components
 import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Signup from './adminpages/Signup'
 // import Navbar from './components/navbar/Navbar'
 import Main from './pages/Main/Main'
 import Singlepage from './pages/singlepage/Singlepage'
@@ -14,7 +14,6 @@ import { AuthContext } from './context/AuthContext'
 import Admin from './pages/admin/Admin'
 import Singleuser from './pages/singleuser/Singleuser'
 import Archives from './pages/archives/Archives'
-import Footer from './Components/footer/Footer'
 
 function App() {
   const { user } = useAuthContext()

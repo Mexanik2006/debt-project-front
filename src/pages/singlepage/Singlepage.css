@@ -132,7 +132,26 @@
         width: 90%;
     }
 }
-*/ .singleForm {
+*/ .home_link a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 30px;
+}
+
+.inputdander {
+    color: red;
+}
+
+
+.inputdander:hover {
+    border: 1px solid red;
+}
+
+.inputdander:focus {
+    border: 1px solid red;
+}
+
+.singleForm {
     /* border: 1px solid red; */
     max-width: 1480px;
     display: flex;

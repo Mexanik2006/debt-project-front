@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import './Header.css';
-
+import Axios from '../../api/api';
+import { Button } from 'antd';
+import { IoIosLogOut } from "react-icons/io";
+import Admin from '../../pages/admin/Admin'
 const Header = () => {
     const { user, dispatch } = useAuthContext();
+    const [data, setData] = useState({});
 
     const logout = () => {
         localStorage.removeItem('user')
@@ -15,6 +19,34 @@ const Header = () => {
         logout();
     };
 
+    const fetchData = async () => {
+        try {
+            const response = await Axios.get('/api/get', {
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            setData(response.data);
+        } catch (error) {
+            console.error(error);
+            console.log('Error occurred while fetching data');
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [user]);
+
+    const handleAdminLogout = () => {
+        logout();
+        // Additional logout logic if needed
+    };
+
+    const handleUserLogout = () => {
+        logout();
+        // Additional logout logic if needed
+    };
+
     return (
         <header>
             <div className="container">
@@ -22,27 +54,24 @@ const Header = () => {
                     <h1>Qarz daftari</h1>
                 </Link>
                 <nav>
-                    {user?.role === "root" ?
-                        <div className='admin_link'>
-                            <Link to="/archives">archives</Link>
-                            <Link to="/admin">admin</Link>
-
-                        </div>
-                        : ""
-                    }
                     {user ? (
-                        <div>
-                            <span>{user.email}</span>
-                            <Link to="/signup">Signup</Link>
-                            <button onClick={handleClick}>Log out</button>
-
+                        <div className='headerright'>
+                            <span style={{ fontSize: "23px", marginRight: '50px', textAlign: "center" }}>Salom <span style={{ fontWeight: "700", color: '#1677FF' }}>{data.userName}</span></span>
+                            <div className="headerbtn">
+                                {data.role === 'admin' ? (
+                                    <Button onClick={handleAdminLogout} danger type='primary' size='large' className='headerbtn'>Admin Chiqish</Button>
+                                    // <Admin />
+                                ) : (
+                                    <Button onClick={handleUserLogout} danger type='primary' size='large' className='headerbtn'>Chiqish</Button>
+                                )}
+                            </div>
                         </div>
                     ) : (
                         <div>
-                            <Link to="/login">Login</Link>
-
+                                <Link to="/login">Login</Link>
                         </div>
                     )}
+
                 </nav>
             </div>
         </header>
