@@ -3,6 +3,7 @@ import "./Admin.js"
 import Axios from '../../api/api.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 import { Link } from 'react-router-dom';
+import ListItems from './ListItems.js';
 
 function Admin() {
     const { user } = useAuthContext();
@@ -41,6 +42,8 @@ function Admin() {
             <div className="">
                 Foydalanuvchi yaratmoqchi bo'lsangiz <Link to={'/signup'}>Shuni bosing</Link>
             </div>
+
+            <ListItems />
             {/* {data.length < 1 ? <h1>Loading...</h1> :
                 <div>
                     {data.map(useritem => <ListItems userlist={useritem} />)}

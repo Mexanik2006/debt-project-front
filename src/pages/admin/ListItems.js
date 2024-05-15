@@ -1,34 +1,110 @@
-import axios from '../../api/api'
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthContext'
+import React, { useEffect, useState } from 'react';
+import axios from '../../api/api';
+import { Button, Table, Modal, Form, Input } from 'antd';
 
-function ListItems({ userlist }) {
-    const { setIsLoading, setSensor } = useContext(AuthContext)
-    // const inputFunction = (e) => {
-    //     console.log(e.target.checked)
-    //     console.log(userlist._id)
-    // }
-    const inputFunction = async (e) => {
-        setSensor(false)
-        setIsLoading(true)
-        console.log(e.target.checked)
-        let checked = e.target.checked
-        await axios.put(`/user/updateuser/${userlist._id}`, { isAllowed: checked })
-            .then(res => console.log(res))
-            .catch((error) => console.log("error bor", error))
-        setIsLoading(false)
-        setSensor(true)
+const layout = {
+    labelCol: { span: 6 },
+    wrapperCol: { span: 18 },
+};
 
-    }
+function ListItems() {
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
+    const [visible, setVisible] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    useEffect(() => {
+        // Fetch users from the backend
+        axios.get('/api/users')
+            .then(response => {
+                setUsers(response.data);
+            })
+            .catch(error => {
+                setError(error.message);
+            });
+    }, []);
+
+    const deleteUser = (id) => {
+        axios.delete(`/api/users/${id}`)
+            .then(response => {
+                setUsers(users.filter(user => user._id !== id));
+            })
+            .catch(error => {
+                setError(error.message);
+            });
+    };
+
+    const showModal = (user) => {
+        setVisible(true);
+        setSelectedUser(user);
+    };
+
+    const handleCancel = () => {
+        setVisible(false);
+        setSelectedUser(null);
+    };
+
+    const handleEdit = (values) => {
+        axios.put(`/api/users/${selectedUser._id}`, values)
+            .then(response => {
+                setUsers(users.map(user => user._id === selectedUser._id ? { ...user, ...values } : user));
+                setVisible(false);
+                setSelectedUser(null);
+            })
+            .catch(error => {
+                setError(error.message);
+            });
+    };
+
     return (
-        <li>
-            <Link to={`/singleuser/${userlist._id}`}>
-                <h1>{userlist.email}</h1>
-            </Link>
-            <input type="checkbox" onChange={inputFunction} />
-        </li>
-    )
+        <div className="">
+            <h1>Foydalanuvchilar ro'yhati</h1>
+            <ul>
+                <Table dataSource={users} className='tablesinlle'>
+                    <Table.Column title="T/R" dataIndex="amount" key="amount" render={(text, record, index) => (
+                        <span>{index + 1}</span>
+                    )} />
+                    <Table.Column title="Ismi" dataIndex="info" key="info" render={(text, record) => (
+                        <span>{record.userName}</span>
+                    )} />
+                    <Table.Column title="Email" dataIndex="info" key="info" render={(text, record) => (
+                        <span>{record.email}</span>
+                    )} />
+                    <Table.Column title="Edit" dataIndex="updatedAt" key="updatedAt" render={(text, record) => (
+                        <Button onClick={() => showModal(record)}>Edit</Button>
+                    )} />
+                    <Table.Column title='Delete' render={(text, record) => (
+                        <Button danger onClick={() => deleteUser(record._id)}>Delete</Button>
+                    )} />
+                </Table>
+
+                <Modal
+                    title="Edit User"
+                    visible={visible}
+                    onCancel={handleCancel}
+                    footer={null}
+                >
+                    <Form {...layout} onFinish={handleEdit}>
+                        <Form.Item label="Username" name="userName" initialValue={selectedUser?.userName} rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Email" name="email" initialValue={selectedUser?.email} rules={[{ required: true, type: 'email' }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Password" name="password" initialValue={selectedUser?.password} rules={[{ required: true }]}>
+                            <Input.Password />
+                        </Form.Item>
+                        <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+                            <Button type="primary" htmlType="submit">
+                                Save
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+
+            </ul>
+        </div >
+    );
 }
 
-export default ListItems
+export default ListItems;

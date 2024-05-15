@@ -32,9 +32,9 @@ const Signup = () => {
 
     try {
       await Axios.post("/api/signup", {
-        userAdminName: values.userAdminName,
-        userAdminEmail: values.userAdminEmail,
-        userAdminPassword: values.userAdminPassword,
+        userName: values.userName,
+        email: values.email,
+        password: values.password,
       }, {
         headers: {
           'Authorization': `Bearer ${user.token}`
@@ -71,7 +71,7 @@ const Signup = () => {
       </div>
       <div className="inputs">
         <Form.Item
-          name="userAdminName"
+          name="userName"
           rules={[
             {
               required: true,
@@ -83,7 +83,7 @@ const Signup = () => {
         </Form.Item>
 
         <Form.Item
-          name="userAdminEmail"
+          name="email"
           rules={[
             {
               required: true,
@@ -95,7 +95,7 @@ const Signup = () => {
         </Form.Item>
 
         <Form.Item
-          name="userAdminPassword"
+          name="password"
           rules={[
             {
               required: true,
