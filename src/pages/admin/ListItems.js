@@ -67,6 +67,9 @@ function ListItems() {
                     <Table.Column title="Ismi" dataIndex="info" key="info" render={(text, record) => (
                         <span>{record.userName}</span>
                     )} />
+                    <Table.Column title="Login" dataIndex="info" key="info" render={(text, record) => (
+                        <span>{record.userlogin}</span>
+                    )} />
                     <Table.Column title="Email" dataIndex="info" key="info" render={(text, record) => (
                         <span>{record.email}</span>
                     )} />
@@ -86,6 +89,9 @@ function ListItems() {
                 >
                     <Form {...layout} onFinish={handleEdit}>
                         <Form.Item label="Username" name="userName" initialValue={selectedUser?.userName} rules={[{ required: true }]}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item label="Login" name="userlogin" initialValue={selectedUser?.userlogin} rules={[{ required: true, type: 'text' }]}>
                             <Input />
                         </Form.Item>
                         <Form.Item label="Email" name="email" initialValue={selectedUser?.email} rules={[{ required: true, type: 'email' }]}>

@@ -4,7 +4,6 @@ import { useContext } from "react";
 import Axios from "../api/api";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-
 const Signup = () => {
   const { setSensor } = useContext(AuthContext);
   const [messageApi, contextHolder] = message.useMessage();
@@ -13,15 +12,15 @@ const Signup = () => {
     await messageApi
       .open({
         type: 'loading',
-        content: 'Ma`lumot yubotilmoqda...',
+        content: 'Ma`lumot yuborilmoqda...',
       })
-      .then(() => message.success('Ma`lumot yuborildi'))
+      .then(() => message.success('Ma`lumot yuborildi'));
   };
 
-  const error = async () => {
+  const error = async (errMessage) => {
     await messageApi.open({
       type: 'error',
-      content: 'Bu xatolik xabari',
+      content: errMessage || 'Xatolik yuz berdi',
     });
   };
 
@@ -33,7 +32,8 @@ const Signup = () => {
     try {
       await Axios.post("/api/signup", {
         userName: values.userName,
-        email: values.email,
+        userlogin: values.userlogin,
+        email: values.email, // Adding email field
         password: values.password,
       }, {
         headers: {
@@ -43,17 +43,17 @@ const Signup = () => {
       success();
     } catch (err) {
       console.error(err);
-      error();
+      error(err.response?.data?.error || 'Server error');
     }
 
     setSensor(true);
   };
 
-
   const onFinish = (values) => {
     console.log('Success:', values);
     sendForm(values); // Send form data to Axios
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
@@ -75,11 +75,23 @@ const Signup = () => {
           rules={[
             {
               required: true,
-              message: 'Yangi foydalanuvchi ismi',
+              message: 'Foydalanuvchi ismini kiriting',
             },
           ]}
         >
-          <Input placeholder='Qarzdorning ismi' />
+          <Input placeholder='Foydalanuvchi ismi' />
+        </Form.Item>
+
+        <Form.Item
+          name="userlogin"
+          rules={[
+            {
+              required: true,
+              message: 'Loginni kiriting',
+            },
+          ]}
+        >
+          <Input type='text' placeholder='Login' />
         </Form.Item>
 
         <Form.Item
@@ -87,7 +99,8 @@ const Signup = () => {
           rules={[
             {
               required: true,
-              message: 'Qancha qarzi borligini yozing',
+              type: 'email',
+              message: 'Emailni kiriting',
             },
           ]}
         >
@@ -99,11 +112,11 @@ const Signup = () => {
           rules={[
             {
               required: true,
-              message: 'Nima chiqardi (yoki oldi) yozing',
+              message: 'Parolni kiriting',
             },
           ]}
         >
-          <Input.Password placeholder='psss' />
+          <Input.Password placeholder='Parol' />
         </Form.Item>
 
         <div className="form_btn">

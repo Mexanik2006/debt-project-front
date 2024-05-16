@@ -9,13 +9,13 @@ export const useSignup = () => {
   const { isLoading, setIsLoading } = useContext(AuthContext)
 
 
-  const signup = async (email, password) => {
+  const signup = async (userlogin, password) => {
     setIsLoading(true);
     setError(null);
     if (user.role === "root") {
       try {
         const response = await axios.post('/user/register', {
-          email,
+          userlogin,
           password
         }, {
           headers: { 'Content-Type': 'application/json' }
