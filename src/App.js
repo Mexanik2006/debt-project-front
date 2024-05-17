@@ -14,6 +14,7 @@ import { AuthContext } from './context/AuthContext'
 import Admin from './pages/admin/Admin'
 import Singleuser from './pages/singleuser/Singleuser'
 import Archives from './pages/archives/Archives'
+import Camera from './pages/camera/Camera'
 
 function App() {
   const { user } = useAuthContext()
@@ -46,6 +47,11 @@ function App() {
             <Route
               path="/archives"
               element={user ? <Archives /> : <Navigate to="/login" />}
+            />
+
+            <Route
+              path="/camera"
+              element={<Camera />}
             />
 
 

@@ -36,6 +36,7 @@ function Forms() {
                 howmuchdebt: values.howmuchdebt,
                 whatcameout: values.whatcameout,
                 phonenumber: values.phonenumber,
+                userAdress: values.userAdress,
                 comments: [],
             }, {
                 headers: {
@@ -117,6 +118,18 @@ function Forms() {
                     ]}
                 >
                     <Input type='number' placeholder='Telefon raqami' />
+                </Form.Item>
+
+                <Form.Item
+                    name="userAdress"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Manzilini yozing',
+                        },
+                    ]}
+                >
+                    <Input type='text' placeholder='Manzili' />
                 </Form.Item>
 
                 <div className="form_btn">

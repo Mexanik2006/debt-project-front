@@ -6,13 +6,14 @@ import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { RotatingLines } from 'react-loader-spinner';
 import { Button, Popconfirm, Table } from 'antd';
+import moment from 'moment';
 
 function Userslist() {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const { sensor, setSensor } = useContext(AuthContext);
     const { user } = useAuthContext();
-
+    console.log(data)
     const fetchData = async () => {
         setIsLoading(true);
         try {
@@ -23,8 +24,7 @@ function Userslist() {
             });
             setData(response.data);
         } catch (error) {
-            console.error(error);
-            console.log('Error occurred while fetching data');
+            console.error('Error occurred while fetching data:', error);
         }
         setIsLoading(false);
     };
@@ -42,22 +42,13 @@ function Userslist() {
                     Authorization: `Bearer ${user.token}`,
                 },
             });
-            setIsLoading(false);
-            setSensor(true);
             fetchData(); // Refresh the data after deleting a user
         } catch (error) {
-            console.error(error);
-            console.log('Error occurred while deleting user');
-            setIsLoading(false);
-            setSensor(true);
+            console.error('Error occurred while deleting user:', error);
         }
+        setIsLoading(false);
+        setSensor(true);
     };
-
-    const confirm = () => new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 3000);
-    });
 
     return (
         <ul className='userlistt'>
@@ -76,43 +67,50 @@ function Userslist() {
                 </div>
             ) : (
                     <div>
-                        <Table dataSource={data} className='tablesinlleuser'>
+                        <Table dataSource={data} className='tablesinlleuser' rowKey="_id" scroll={{ x: 1300 }}>
                             <Table.Column title="Ismi" dataIndex="debtorname" key="debtorname" />
                             <Table.Column title="Qancha qarzi bor" dataIndex="howmuchdebt" key="howmuchdebt" />
                             <Table.Column title="Nima olgan" dataIndex="whatcameout" key="whatcameout" />
                             <Table.Column title="Telefon raqami" dataIndex="phonenumber" key="phonenumber" render={(text, record) => (
                             <span>+{record.phonenumber}</span>
                         )} />
+                            <Table.Column title="Manzili" dataIndex="phonenumber" key="phonenumber" render={(text, record) => (
+                                <span>{record.userAdress}</span>
+                            )} />
+                            <Table.Column
+                                title="Qo'shilgan vaqti"
+                                dataIndex="createdAt"
+                                key="createdAt"
+                                render={(text, record) => (
+                                    <span>{String(new Date(record.createdAt).getDate()).padStart(2, '0')} {new Date(record.createdAt).toLocaleDateString('default', { month: 'long' })} {new Date(record.createdAt).getFullYear()} yil</span>
+                                )}
+                            />
+                            <Table.Column title="Qardorni ko'rish" dataIndex="actions" key="actions" render={(text, record) => (
+                                <Link className='link' to={`/debt/${record._id}`}>
+                                    Ko'rish
+                                </Link>
+                            )} />
+
                             <Table.Column title="Taxrirlash" dataIndex="actions" key="actions" render={(text, record) => (
                                 <Link className='link' to={`/debt/${record._id}`}>
-                                Edit
+                                    Taxrirlash
                             </Link>
                             )} />
                             <Table.Column title="O'chirish" dataIndex="actions" key="actions" render={(text, record) => (
                                 <Popconfirm
                                     title="Qarzdorni o'chirmoqchimisiz?"
                                     description={`Siz ${record.debtorname} ni o'chirmoqdasiz...`}
-                                    onConfirm={() => {
-                                        confirm().then(() => deleteUser(record._id));
-                                    }}
+                                    onConfirm={() => deleteUser(record._id)}
                                     onCancel={() => console.log('Bekor qilindi')}
                                     onOpenChange={() => console.log('open change')}
                                     okText="Ha"
                                     cancelText="Yo'q"
                                 >
-                                    <Button danger>Delete</Button>
+                                    <Button danger>O'chirish</Button>
                                 </Popconfirm>
                             )} />
                         </Table>
-                        <Table dataSource={data} className='tablesinlleuser_media'>
-                            <Table.Column title="Ismi" dataIndex="debtorname" key="debtorname" />
-                            <Table.Column title="Qancha qarzi bor" dataIndex="howmuchdebt" key="howmuchdebt" />
-                            <Table.Column title="Taxrirlash" dataIndex="actions" key="actions" render={(text, record) => (
-                                <Link className='link' to={`/debt/${record._id}`}>
-                                    Edit
-                                </Link>
-                            )} />
-                        </Table>
+
                     </div>
             )}
         </ul>
