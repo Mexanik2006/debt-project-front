@@ -1,9 +1,10 @@
 import Axios from '../../api/api';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import "./Form.css";
 import { AuthContext } from '../../context/AuthContext';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { Button, Form, Input, InputNumber, message } from 'antd';
+import UploadImage from './settings/UploadImage';
 
 function Forms() {
     const { setSensor } = useContext(AuthContext);
@@ -60,6 +61,22 @@ function Forms() {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    const [loadings, setLoadings] = useState([]);
+    const enterLoading = (index) => {
+        setLoadings((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = true;
+            return newLoadings;
+        });
+        setTimeout(() => {
+            setLoadings((prevLoadings) => {
+                const newLoadings = [...prevLoadings];
+                newLoadings[index] = false;
+                return newLoadings;
+            });
+        }, 6000);
+    };
     return (
         <Form className='form'
             initialValues={{
@@ -72,6 +89,18 @@ function Forms() {
                 <h3>Yangi qarzdor qo'shish:</h3>
             </div>
             <div className="inputs">
+                {/* <Form.Item
+                    name="debtorname"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Qarzdorning ismini kiriting!',
+                        },
+                    ]}
+                >
+                    <UploadImage />
+                </Form.Item> */}
+
                 <Form.Item
                     name="debtorname"
                     rules={[
@@ -135,8 +164,8 @@ function Forms() {
                 <div className="form_btn">
                 {contextHolder}
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Qo'shish
+                        <Button type="primary" htmlType='submit' loading={loadings[0]} onClick={() => enterLoading(0)}>
+                            Click me!
                         </Button>
                     </Form.Item>
             </div>

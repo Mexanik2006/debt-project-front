@@ -43,7 +43,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item
-            label="userlogin:"
+            label="Login:"
             name="userlogin"
             rules={[
               {
@@ -52,7 +52,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input placeholder="example" />
+            <Input placeholder="Loginingizni kiriting..." />
           </Form.Item>
 
           <Form.Item

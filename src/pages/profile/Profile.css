@@ -1,0 +1,13 @@
+.profile_flex {
+    display: flex;
+    margin-left: 50px;
+}
+
+.profile_none {
+    margin-right: 20px;
+    color: #1677FF;
+}
+
+.Profile_get {
+    color: red;
+}
